@@ -11,6 +11,7 @@ export const initialState = {
   blogPostCreated: false,
   blogPostUpdated: false,
   blogPostRemoved: false,
+  removeButtonLoading: false,
 };
 
 export const blogPostSlice = createSlice({
@@ -55,6 +56,29 @@ export const blogPostSlice = createSlice({
       state.loading = false;
       state.buttonLoading = false;
     },
+    setStatus: (state, { payload }) => {
+      state.status = payload;
+    },
+    setNextPage: (state, { payload }) => {
+      state.pageItems = payload;
+    },
+    setPreviousPage: (state, { payload }) => {
+      state.pageItems = payload;
+    },
+    reset: (state) => {
+      state.error = null;
+      state.blogPostCreated = false;
+      state.blogPostRemoved = false;
+      state.blogPostUpdated = false;
+      state.updateButtonLoading = false;
+      state.removeButtonLoading = false;
+      state.loading = false;
+    },
+    setRemoveButtonLoading: (state, { payload }) => {
+      state.removeButtonLoading = payload;
+      state.loading = false;
+      state.error = null;
+    },
   },
 });
 
@@ -66,6 +90,12 @@ export const {
   blogPostCreated,
   blogPostRemoved,
   blogPostUpdated,
+  setRemoveButtonLoading,
+  setUpdateButtonLoading,
+  setNextPage,
+  setPreviousPage,
+  reset,
+  setStatus,
 } = blogPostSlice.actions;
 export default blogPostSlice.reducer;
 

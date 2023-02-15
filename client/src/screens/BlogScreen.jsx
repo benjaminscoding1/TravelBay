@@ -19,22 +19,20 @@ import {
 import { Link as ReactLink, useParams } from 'react-router-dom';
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getBlogPostsByCategory } from '../redux/actions/blogPostActions';
+import { getBlogPostsByCategory, previousPageClick, nextPageClick } from '../redux/actions/blogPostActions';
 import { ArrowLeftIcon, ArrowRightIcon } from '@chakra-ui/icons';
 
 const BlogScreen = () => {
   const { category } = useParams();
 
   const blogPostInfo = useSelector((state) => state.blogPosts);
-  const { blogPosts, loading, error, pageTitle } = blogPostInfo;
+  const { blogPosts, loading, error, pageTitle, pageItems, status } = blogPostInfo;
   const dispatch = useDispatch();
-
-  const pageItems = 0;
 
   useEffect(() => {
     dispatch(getBlogPostsByCategory(category, pageItems));
     window.scroll(0, 0);
-  }, [category, dispatch]);
+  }, [category, dispatch, pageItems, status]);
 
   return (
     <VStack spacing='30px' minHeight='100vh'>
@@ -75,9 +73,9 @@ const BlogScreen = () => {
                       <Text mx='2'>|</Text>
                     </Box>
                     <Text>
-                      Category:{' '}
+                      Category:
                       <Link pl='1' as={ReactLink} to={`/blog/${post.category}`}>
-                        {category.charAt(0).toUpperCase() + category.slice(1)}
+                        {post.category.charAt(0).toUpperCase() + post.category.slice(1)}
                       </Link>
                     </Text>
                     <Spacer />
@@ -90,6 +88,18 @@ const BlogScreen = () => {
               </Stack>
             </Box>
           ))}
+
+          <Flex>
+            <Button m='3' isDisabled={pageItems === 0} onClick={() => dispatch(previousPageClick(pageItems))}>
+              <ArrowLeftIcon />
+            </Button>
+            <Button
+              m='3'
+              isDisabled={status === 201 || blogPosts.length <= 3}
+              onClick={() => dispatch(nextPageClick(pageItems))}>
+              <ArrowRightIcon />
+            </Button>
+          </Flex>
         </>
       )}
     </VStack>
