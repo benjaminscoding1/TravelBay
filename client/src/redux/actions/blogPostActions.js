@@ -36,6 +36,24 @@ export const getBlogPostsByCategory = (category, pageItems) => async (dispatch) 
   }
 };
 
+export const getBlogPost = (id) => async (dispatch) => {
+  dispatch(setLoading(true));
+  try {
+    const { data } = await axios.get(`/api/blog-posts/post/${id}`);
+    dispatch(setBlogPost(data));
+  } catch (error) {
+    dispatch(
+      setError(
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+          ? error.message
+          : 'An unexpected error has occured. Please try again later.'
+      )
+    );
+  }
+};
+
 export const nextPageClick = (pageItems) => async (dispatch) => {
   dispatch(setNextPage(pageItems + 4));
 };

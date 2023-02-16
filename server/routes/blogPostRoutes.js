@@ -27,6 +27,18 @@ const getBlogPostByCategory = async (req, res) => {
   }
 };
 
+const getBlogPost = async (req, res) => {
+  console.log(req.params.id);
+  const blogPost = await BlogPost.findById(req.params.id);
+
+  if (blogPost) {
+    res.json(blogPost);
+  } else {
+    res.status(404).send('Blog post not found.');
+  }
+};
+
+blogPostRoutes.route('/post/:id').get(getBlogPost);
 blogPostRoutes.route('/:category/:pageNumber').get(getBlogPostByCategory);
 
 export default blogPostRoutes;
