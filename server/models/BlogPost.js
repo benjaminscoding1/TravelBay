@@ -16,7 +16,6 @@ const blogPostSchema = new mongoose.Schema(
     },
     contentTwo: {
       type: String,
-      required: true,
     },
     author: {
       type: String,

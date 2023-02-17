@@ -1,6 +1,7 @@
 import express from 'express';
 import User from '../models/User.js';
 import jwt from 'jsonwebtoken';
+import asyncHandler from 'express-async-handler';
 
 const userRoutes = express.Router();
 
@@ -9,7 +10,7 @@ const genToken = (id) => {
   return jwt.sign({ id }, process.env.TOKEN_SECRET, { expiresIn: '30d' });
 };
 
-const loginUser = async (req, res) => {
+const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
 
@@ -22,7 +23,7 @@ const loginUser = async (req, res) => {
   } else {
     res.status(401).send('Invalid Email or Password');
   }
-};
+});
 
 userRoutes.route('/login').post(loginUser);
 
