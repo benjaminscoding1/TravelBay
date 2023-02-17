@@ -1,4 +1,5 @@
 import express from 'express';
+import protectRoute from '../middleware/authMiddleware.js';
 import BlogPost from '../models/BlogPost.js';
 
 const blogPostRoutes = express.Router();
@@ -38,7 +39,60 @@ const getBlogPost = async (req, res) => {
   }
 };
 
+const createBlogPost = async (req, res) => {
+  const { image, title, contentOne, contentTwo, category, author = 'Benjamin Fischer' } = req.body;
+
+  const newBlogPost = await BlogPost.create({
+    image,
+    title,
+    contentOne,
+    contentTwo,
+    category: String(category).toLowerCase(),
+    author,
+  });
+  await newBlogPost.save();
+  const blogPosts = await BlogPost.find({});
+  if (newBlogPost) {
+    res.json(blogPosts);
+  } else {
+    res.status(404).send('Blog post could not be stored.');
+  }
+};
+
+const updateBlogPost = async (req, res) => {
+  const { _id, title, contentOne, contentTwo, category, image } = req.body;
+
+  const blogPost = await BlogPost.findById(_id);
+
+  if (blogPost) {
+    blogPost.contentOne = contentOne;
+    blogPost.contentTwo = contentTwo;
+    blogPost.title = title;
+    blogPost.category = category;
+    blogPost.image = image;
+    await blogPost.save();
+
+    const blogPosts = await BlogPost.find({});
+    res.json(blogPosts);
+  } else {
+    res.status(404).send('Blog post could not be updated');
+  }
+};
+
+const deletePost = async (req, res) => {
+  const blogPost = await BlogPost.findByIdAndDelete(req.params.id);
+
+  if (blogPost) {
+    res.json(blogPost);
+  } else {
+    res.status(404).send('Blog post could not be removed.');
+  }
+};
+
+blogPostRoutes.route('/').post(protectRoute, createBlogPost);
 blogPostRoutes.route('/post/:id').get(getBlogPost);
+blogPostRoutes.route('/:id').delete(protectRoute, deletePost);
+blogPostRoutes.route('/').put(protectRoute, updateBlogPost);
 blogPostRoutes.route('/:category/:pageNumber').get(getBlogPostByCategory);
 
 export default blogPostRoutes;

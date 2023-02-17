@@ -5,6 +5,7 @@ import express from 'express';
 
 //Our Routes
 import blogPostRoutes from './routes/blogPostRoutes.js';
+import userRoutes from './routes/userRoutes.js';
 
 db();
 const app = express();
@@ -27,6 +28,7 @@ app.get('/api/config/emailjs', (req, res) =>
 );
 
 app.use('/api/blog-posts', blogPostRoutes);
+app.use('/api/users', userRoutes);
 
 const port = process.env.PORT || 5000;
 

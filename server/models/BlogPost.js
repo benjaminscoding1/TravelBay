@@ -14,7 +14,7 @@ const blogPostSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    ContentTwo: {
+    contentTwo: {
       type: String,
       required: true,
     },
