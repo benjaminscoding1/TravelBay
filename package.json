@@ -6,9 +6,10 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "node server/server.js",
+    "start": "node server/server.js",
     "client": "npm run start --prefix client",
-    "app": "concurrently npm \"npm run server\" \"npm run client\""
+    "app": "concurrently npm \"npm run start\" \"npm run client\"",
+    "build": "cd client && npm install && npm run build"
   },
   "author": "Benjamin Fischer",
   "license": "ISC",

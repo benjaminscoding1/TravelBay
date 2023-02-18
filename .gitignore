@@ -9,7 +9,7 @@
 /coverage
 
 # production
-/build
+client/build
 node_modules/
 .env
 # misc
