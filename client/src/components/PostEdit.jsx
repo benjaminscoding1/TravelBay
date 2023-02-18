@@ -58,6 +58,7 @@ const PostEdit = ({ _id, contentOne, contentTwo, title, category, image }) => {
               <Box as='span' flex='1' textAlign='left'>
                 {title}
               </Box>
+              <AccordionIcon />
             </AccordionButton>
           </h2>
           <AccordionPanel pb='4'>

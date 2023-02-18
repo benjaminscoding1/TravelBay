@@ -8,6 +8,7 @@ import LoginScreen from './screens/LoginScreen';
 import AdminScreen from './screens/AdminScreen';
 import Footer from './components/Footer';
 import AboutScreen from './screens/AboutScreen';
+import HomeScreen from './screens/HomeScreen';
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
             <Route path='/login' element={<LoginScreen />}></Route>
             <Route path='/admin-console' element={<AdminScreen />}></Route>
             <Route path='/about' element={<AboutScreen />}></Route>
+            <Route path='/' element={<HomeScreen />}></Route>
           </Routes>
         </main>
         <Footer />
