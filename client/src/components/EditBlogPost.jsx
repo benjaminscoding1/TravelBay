@@ -67,19 +67,20 @@ const EditBlogPost = () => {
           </Stack>
         ) : (
           <>
-            {blogPosts.map((post) => (
-              <PostEdit
-                key={post._id}
-                contentOne={post.contentOne}
-                contentTwo={post.contentTwo}
-                image={post.image}
-                createdAt={post.createdAt}
-                author={post.author}
-                category={post.category}
-                title={post.title}
-                _id={post._id}
-              />
-            ))}
+            {blogPosts !== undefined &&
+              blogPosts.map((post) => (
+                <PostEdit
+                  key={post._id}
+                  contentOne={post.contentOne}
+                  contentTwo={post.contentTwo}
+                  image={post.image}
+                  createdAt={post.createdAt}
+                  author={post.author}
+                  category={post.category}
+                  title={post.title}
+                  _id={post._id}
+                />
+              ))}
           </>
         )}
       </VStack>

@@ -78,8 +78,10 @@ const updateBlogPost = asyncHandler(async (req, res) => {
 const deletePost = asyncHandler(async (req, res) => {
   const blogPost = await BlogPost.findByIdAndDelete(req.params.id);
 
-  if (blogPost) {
-    res.json(blogPost);
+  const allBlogPosts = await BlogPost.find({});
+
+  if (allBlogPosts) {
+    res.json(allBlogPosts);
   } else {
     res.status(404).send('Blog post could not be removed.');
   }

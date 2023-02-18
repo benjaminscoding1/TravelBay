@@ -138,7 +138,7 @@ export const removePost = (_id) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.delete(`/api/blog-posts${_id}`, config);
+    const { data } = await axios.delete(`/api/blog-posts/${_id}`, config);
     dispatch(setBlogPostByCategory(data));
     dispatch(blogPostRemoved(true));
   } catch (error) {
